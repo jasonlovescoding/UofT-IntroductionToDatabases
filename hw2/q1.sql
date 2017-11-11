@@ -44,12 +44,12 @@ CREATE VIEW YEARLY_RANGE AS
 DROP VIEW IF EXISTS ELECTION_PARTY_YEARLY_RANGE CASCADE;
 CREATE VIEW ELECTION_PARTY_YEARLY_RANGE AS
   (SELECT DISTINCT E.year, E.country_id, CASE 
-                                          WHEN avgrange > 0 AND avgrange <= 5 THEN '(0, 5]'
-                                          WHEN avgrange > 5  AND avgrange <= 10 THEN '(5, 10]'
-                                          WHEN avgrange > 10 AND avgrange <= 20 THEN '(10, 20]'
-                                          WHEN avgrange > 20 AND avgrange <= 30 THEN '(20, 30]'
-                                          WHEN avgrange > 30 AND avgrange <= 40 THEN '(30, 40]'
-                                          ELSE '(40, 100]'
+                                          WHEN avgrange > 0 AND avgrange <= 5 THEN '(0-5]'
+                                          WHEN avgrange > 5  AND avgrange <= 10 THEN '(5-10]'
+                                          WHEN avgrange > 10 AND avgrange <= 20 THEN '(10-20]'
+                                          WHEN avgrange > 20 AND avgrange <= 30 THEN '(20-30]'
+                                          WHEN avgrange > 30 AND avgrange <= 40 THEN '(30-40]'
+                                          ELSE '(40-100]'
                                           END AS voteRange
                                           , E.party_id
     FROM ELECTION_PARTY_RANGE E JOIN YEARLY_RANGE Y ON E.year = Y.year AND E.party_id = Y.party_id
