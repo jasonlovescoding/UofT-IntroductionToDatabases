@@ -17,6 +17,7 @@
 //     java -cp /local/packages/jdbc-postgresql/postgresql-8.4-701.jdbc4.jar: Example
 // Alternatively, we can set our CLASSPATH variable in linux.  (See
 // /local/packages/jdbc-postgresql/HelloPostgresql.txt on cdf for how.)
+// export CLASSPATH=.:/local/packages/jdbc-postgresql/postgresql-42.1.4.jar
 
 import java.sql.*;
 import java.io.*;
