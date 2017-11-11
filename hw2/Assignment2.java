@@ -69,11 +69,43 @@ public class Assignment2 extends JDBCSubmission {
       return new ElectionCabinetResult(elections, cabinets); 
     }
 
-
     @Override
     public List<Integer> findSimilarPoliticians(Integer politicianName, Float threshold) {
+        List<Integer> presidents = new ArrayList<Integer>();
+        PreparedStatement ps;
+        ResultSet rs;
+        String query1,query2;
+        String politicianDescription;
         // Implement this method!
-        return null;
+        query1 = "select description"
+               + "from politician_president"
+               + "where id = ? ;"
+        try{
+        	ps = this.connection.prepareStatement(query1);
+        	ps.setString(1,politicianName);
+        	rs = ps.executeQuery();
+        	politicianDescription = rs.getString("description");
+        } catch (SQLException e) {
+          e.printStackTrace();
+          return null;
+      }
+        query2 = "select id, description"
+               + "from politician_president"
+               + "where similarity(?,description) > ?"
+               + "and id <> ? ;"
+        try{
+        	ps = this.connection.prepareStatement(query2);
+        	ps.setString(1,politicianDescription);
+        	ps.setString(2,threshold);
+        	ps.setString(3, politicianName);
+        	rs = ps.executeQuery();
+        	while(rs.next())
+        		presidents.add(rs.getInt("id"));
+        } catch (SQLException e) {
+          e.printStackTrace();
+          return null;
+      } 
+        return presidents;
     }
 
     public static void main(String[] args) {
