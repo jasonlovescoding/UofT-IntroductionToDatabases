@@ -52,7 +52,7 @@ public class Assignment2 extends JDBCSubmission {
       query = "select cabinet.id, cabinet.election_id" 
             + " from cabinet join election on cabinet.election_id = election.id" 
             + " join country on election.country_id = country.id" 
-            + " where country.name = ? and election.e_type = 'Parliamentary election'" 
+            + " where country.name = ?" 
             + " order by e_date desc"; 
       try {
         ps = this.connection.prepareStatement(query);
