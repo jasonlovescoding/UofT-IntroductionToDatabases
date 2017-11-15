@@ -15,6 +15,8 @@ CREATE TABLE q7(
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
 -- Define views for your intermediate steps here.
+
+-- allliance can be 1: parties who share the same leader in the same election 2: party with its leader
 DROP VIEW IF EXISTS ALLIANCE CASCADE;
 CREATE VIEW ALLIANCE AS
   (SELECT ER1.party_id AS alliedPartyId1, ER2.party_id AS alliedPartyId2, country_id, election.id AS election_id
@@ -24,6 +26,7 @@ CREATE VIEW ALLIANCE AS
     WHERE (ER1.alliance_id = ER2.alliance_id AND ER1.party_id < ER2.party_id) 
       OR (ER1.alliance_id = ER2.id)); 
 
+-- re-order party alliance pairs with smaller id first
 DROP VIEW IF EXISTS ALLIANCE_PAIR CASCADE;
 CREATE VIEW ALLIANCE_PAIR AS
   (SELECT election_id, country_id, alliedPartyId1, alliedPartyId2
@@ -34,18 +37,21 @@ CREATE VIEW ALLIANCE_PAIR AS
     FROM ALLIANCE
     WHERE alliedPartyId1 > alliedPartyId2);
 
+-- count the frequency of alliance pairs
 DROP VIEW IF EXISTS ALLIANCE_COUNT CASCADE;
 CREATE VIEW ALLIANCE_COUNT AS
   (SELECT alliedPartyId1, alliedPartyId2, country_id, count(distinct election_id) AS alliance_count
     FROM ALLIANCE_PAIR
     GROUP BY alliedPartyId1, alliedPartyId2, country_id);
 
+-- conut the frequency of elections in a country
 DROP VIEW IF EXISTS COUNTRY_ELECTION_COUNT CASCADE;
 CREATE VIEW COUNTRY_ELECTION_COUNT AS
   (SELECT country_id, count(distinct id) as election_count
     FROM election
     GROUP BY country_id);
 
+-- select only those pairs who are in more than 30% of the elections
 DROP VIEW IF EXISTS ANSWER CASCADE;
 CREATE VIEW ANSWER AS
   (SELECT A.country_id as countryId, alliedPartyId1, alliedPartyId2

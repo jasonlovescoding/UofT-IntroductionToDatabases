@@ -15,12 +15,15 @@ CREATE TABLE q5(
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
 -- Define views for your intermediate steps here.
+
+-- select cabinets after 1996 and cast the e_date to year, while concatenating with its country
 DROP VIEW IF EXISTS PARTY_CABINET_TIME CASCADE;
 CREATE VIEW PARTY_CABINET_TIME AS
   (SELECT party_id, cabinet_id, country_id, cast(to_char(start_date, 'YYYY') AS integer) AS year
     FROM cabinet JOIN cabinet_party ON cabinet.id = cabinet_party.cabinet_id
     WHERE start_date >= DATE '1996-01-01');
-    
+   
+-- select committed parties. they are not parties who did not appear cabinets in any year since 1996
 DROP VIEW IF EXISTS COMMITTED_PARTY CASCADE;
 CREATE VIEW COMMITTED_PARTY AS
   (SELECT party_id 
@@ -37,6 +40,7 @@ CREATE VIEW COMMITTED_PARTY AS
                   FROM PARTY_CABINET_TIME P3
                   WHERE P2.cabinet_id = P3.cabinet_id)));             
 
+-- concatenate everything for the answer
 DROP VIEW IF EXISTS ANSWER CASCADE;
 CREATE VIEW ANSWER AS
   (SELECT C.name AS countryName, P.name AS partyName, PF.family AS partyFamily, PP.state_market AS stateMarket

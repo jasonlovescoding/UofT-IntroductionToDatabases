@@ -11,7 +11,8 @@ public class Assignment2 extends JDBCSubmission {
 
     @Override
     public boolean connectDB(String url, String username, String password) {
-      // Implement this method!
+	// try connection. return true if success, otherwise false
+	// with message output
       try {
         this.connection = DriverManager.getConnection(url, username, password);
         System.out.println("DB connection established.");  
@@ -24,6 +25,9 @@ public class Assignment2 extends JDBCSubmission {
 
     @Override
     public boolean disconnectDB() {
+	// try disconnect, return true if already disconnected/succesfully disconnected
+	// otherwise false
+	// with message output
        if (this.connection != null) {
           try {
             this.connection.close();
@@ -48,7 +52,7 @@ public class Assignment2 extends JDBCSubmission {
       PreparedStatement ps;
       ResultSet rs;
       int cabinetId, electionId;
-      // Implement this method!
+      // order the cabinets with the corresponding election given the countryName to search
       query = "select cabinet.id, cabinet.election_id" 
             + " from cabinet join election on cabinet.election_id = election.id" 
             + " join country on election.country_id = country.id" 
@@ -59,6 +63,7 @@ public class Assignment2 extends JDBCSubmission {
         ps.setString(1, countryName);
         rs = ps.executeQuery(); 
         while (rs.next()) {
+		// store each pair in separate lists, for construction of the answer
           cabinets.add(rs.getInt("id"));
           elections.add(rs.getInt("election_id"));
         }
@@ -79,10 +84,10 @@ public class Assignment2 extends JDBCSubmission {
         // Implement this method!
         query1 = "select description"
                + "from politician_president"
-               + "where id = ? ;"
+               + "where id = ?";
         try{
         	ps = this.connection.prepareStatement(query1);
-        	ps.setString(1,politicianName);
+        	ps.setInt(1,politicianName);
         	rs = ps.executeQuery();
         	politicianDescription = rs.getString("description");
         } catch (SQLException e) {
@@ -92,12 +97,12 @@ public class Assignment2 extends JDBCSubmission {
         query2 = "select id, description"
                + "from politician_president"
                + "where similarity(?,description) > ?"
-               + "and id <> ? ;"
+               + "and id <> ?";
         try{
         	ps = this.connection.prepareStatement(query2);
         	ps.setString(1,politicianDescription);
-        	ps.setString(2,threshold);
-        	ps.setString(3, politicianName);
+        	ps.setFloat(2,threshold);
+        	ps.setInt(3, politicianName);
         	rs = ps.executeQuery();
         	while(rs.next())
         		presidents.add(rs.getInt("id"));
