@@ -1,0 +1,239 @@
+psql (9.5.10)
+Type "help" for help.
+
+csc343h-zhan5612=> \i runner.txt 
+-- Loading schema and data:
+psql:schema.sql:98: NOTICE:  drop cascades to 42 other objects
+DETAIL:  drop cascades to table quizschema.student
+drop cascades to table quizschema.class
+drop cascades to function quizschema.valid_classroom()
+drop cascades to table quizschema.inclass
+drop cascades to function quizschema.valid_class()
+drop cascades to table quizschema.question
+drop cascades to table quizschema.tfquestion
+drop cascades to table quizschema.mcquestion
+drop cascades to table quizschema.numquestion
+drop cascades to table quizschema.option
+drop cascades to function quizschema.multiple_choice()
+drop cascades to table quizschema.hint
+drop cascades to function quizschema.hint_only_for_incorrect()
+drop cascades to table quizschema.quiz
+drop cascades to table quizschema.hasquestion
+drop cascades to function quizschema.no_empty_quiz()
+drop cascades to table quizschema.response
+drop cascades to function quizschema.response_typecheck()
+drop cascades to function quizschema.response_inclass()
+drop cascades to function quizschema.response_inquiz()
+drop cascades to table quizschema.tfresponse
+drop cascades to table quizschema.mcresponse
+drop cascades to table quizschema.numresponse
+drop cascades to view quizschema.tfqhints
+drop cascades to view quizschema.mcqs
+drop cascades to view quizschema.mcqhints
+drop cascades to view quizschema.numqs
+drop cascades to view quizschema.numqhints
+drop cascades to view quizschema.tfqcorrects
+drop cascades to view quizschema.tfqincorrects
+drop cascades to view quizschema.mcqcorrects
+drop cascades to view quizschema.mcqincorrects
+drop cascades to view quizschema.numqcorrects
+drop cascades to view quizschema.numqincorrects
+drop cascades to view quizschema.enrolled
+drop cascades to view quizschema.included
+drop cascades to view quizschema.unanswered
+drop cascades to view quizschema.unansweredcount
+drop cascades to view quizschema.corrects
+drop cascades to view quizschema.correctcount
+drop cascades to view quizschema.incorrects
+drop cascades to view quizschema.incorrectcount
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ Data insertion success. 
+-------------------------
+ 
+(1 row)
+
+-- Query 1:
+    fullname     |    sid     
+-----------------+------------
+ Lena Headey     | 0998801234
+ Peter Dinklage  | 0010784522
+ Emilia Clarke   | 0997733991
+ Kit Harrington  | 5555555555
+ Sophie Turner   | 1111111111
+ Maisie Williams | 2222222222
+(6 rows)
+
+-- Query 2:
+psql:q2.sql:2: NOTICE:  view "tfqhints" does not exist, skipping
+DROP VIEW
+psql:q2.sql:7: WARNING:  column "numhints" has type "unknown"
+DETAIL:  Proceeding with relation creation anyway.
+CREATE VIEW
+psql:q2.sql:9: NOTICE:  view "mcqs" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q2.sql:16: NOTICE:  view "mcqhints" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q2.sql:23: NOTICE:  view "numqs" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q2.sql:30: NOTICE:  view "numqhints" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+ qid |                        text                        | numhints 
+-----+----------------------------------------------------+----------
+ 782 | What do you promise when you take the oath of citi |        1
+ 625 | What is the Underground Railroad?                  |        3
+ 601 | During the "Quiet Revolution," Quebec experienced  |        3
+ 566 | The Prime Minister, Justin Trudeau, is Canada's He |         
+ 790 | During the War of 1812 the Americans burned down t |        0
+(5 rows)
+
+-- Query 3:
+psql:q3.sql:2: NOTICE:  view "tfqcorrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q3.sql:11: NOTICE:  view "mcqcorrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q3.sql:19: NOTICE:  view "numqcorrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q3.sql:28: NOTICE:  view "corrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q3.sql:37: NOTICE:  view "enrolled" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q3.sql:45: NOTICE:  view "scores" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+    sid     |  lastname  | total_grade 
+------------+------------+-------------
+ 0010784522 | Dinklage   |           8
+ 0997733991 | Clarke     |           5
+ 0998801234 | Headey     |           3
+ 1111111111 | Turner     |           0
+ 5555555555 | Harrington |           1
+(5 rows)
+
+-- Query 4:
+psql:q4.sql:2: NOTICE:  drop cascades to view scores
+DROP VIEW
+CREATE VIEW
+psql:q4.sql:10: NOTICE:  view "included" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q4.sql:19: NOTICE:  view "unanswered" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+    sid     | qid |                        text                        
+------------+-----+----------------------------------------------------
+ 5555555555 | 625 | What is the Underground Railroad?
+ 1111111111 | 625 | What is the Underground Railroad?
+ 1111111111 | 601 | During the "Quiet Revolution," Quebec experienced 
+ 1111111111 | 790 | During the War of 1812 the Americans burned down t
+ 1111111111 | 566 | The Prime Minister, Justin Trudeau, is Canada's He
+ 5555555555 | 601 | During the "Quiet Revolution," Quebec experienced 
+(6 rows)
+
+-- Query 5:
+psql:q5.sql:2: NOTICE:  drop cascades to view corrects
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:11: NOTICE:  view "tfqincorrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:30: NOTICE:  view "mcqincorrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:48: NOTICE:  view "numqincorrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:59: NOTICE:  drop cascades to view unanswered
+DROP VIEW
+CREATE VIEW
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:74: NOTICE:  view "unanswered" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:86: NOTICE:  view "unansweredcount" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:96: NOTICE:  view "corrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:105: NOTICE:  view "correctcount" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:112: NOTICE:  view "incorrects" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+psql:q5.sql:121: NOTICE:  view "incorrectcount" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+ qid | unansweredcount | correctcount | incorrectcount 
+-----+-----------------+--------------+----------------
+ 566 |               1 |            3 |              1
+ 601 |               2 |            2 |              1
+ 625 |               2 |            2 |              1
+ 790 |               1 |            2 |              2
+(4 rows)
+
+csc343h-zhan5612=> \q
+
